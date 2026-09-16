@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Optional
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, ConfigDict, Field, EmailStr
 
 
 class InventoryItemBase(BaseModel):
@@ -20,12 +20,11 @@ class InventoryItemUpdate(BaseModel):
 
 
 class InventoryItemResponse(InventoryItemBase):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     created_at: datetime
     updated_at: datetime
-
-    class Config:
-        from_attributes = True
 
 
 class OrderItemCreate(BaseModel):
@@ -34,21 +33,22 @@ class OrderItemCreate(BaseModel):
 
 
 class OrderItemResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     inventory_item_id: int
     quantity: int
     unit_price: float
 
-    class Config:
-        from_attributes = True
-
 
 class OrderCreate(BaseModel):
     customer_email: EmailStr
-    items: List[OrderItemCreate] = Field(..., min_items=1)
+    items: List[OrderItemCreate] = Field(..., min_length=1)
 
 
 class OrderResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     customer_email: str
     status: str
@@ -56,5 +56,3 @@ class OrderResponse(BaseModel):
     created_at: datetime
     items: List[OrderItemResponse]
 
-    class Config:
-        from_attributes = True
