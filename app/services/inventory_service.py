@@ -43,12 +43,13 @@ def update_inventory_stock(db: Session, item_id: int, update_in: InventoryItemUp
 
 def validate_stock_availability(db: Session, item_id: int, requested_quantity: int) -> InventoryItem:
     item = get_inventory_item(db, item_id)
-    if item.stock_quantity < requested_quantity:
+    if item.stock_quantity <= 0:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Insufficient stock for item '{item.name}'. Available: {item.stock_quantity}, Requested: {requested_quantity}."
         )
     return item
+
 
 
 def deduct_stock(db: Session, item_id: int, quantity: int) -> InventoryItem:
