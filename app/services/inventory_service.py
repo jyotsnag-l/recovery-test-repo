@@ -51,6 +51,7 @@ def validate_stock_availability(db: Session, item_id: int, requested_quantity: i
     return item
 
 
+
 def deduct_stock(db: Session, item_id: int, quantity: int) -> InventoryItem:
     item = get_inventory_item(db, item_id)
     item.stock_quantity -= quantity
