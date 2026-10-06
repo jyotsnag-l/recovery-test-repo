@@ -80,11 +80,11 @@ README.md
 Start the FastAPI development server with `uvicorn`:
 
 ```bash
-uvicorn app.main:app --reload
+uvicorn app.main:app --port 9000 --reload
 ```
 
 The interactive API documentation (Swagger UI) will be accessible at:
-- `http://127.0.0.1:8000/docs`
+- `http://127.0.0.1:9000/docs`
 
 ---
 
